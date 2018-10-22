@@ -25,5 +25,6 @@
     <string name="open_drawer">Open</string>
     <string name="close_drawer">Close</string>
     <string name="min">min</string>
+    <string name="action_timer">Timer</string>
 
 </resources>

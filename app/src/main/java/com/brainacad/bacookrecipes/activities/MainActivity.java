@@ -1,6 +1,7 @@
 package com.brainacad.bacookrecipes.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,7 +19,10 @@ import android.widget.ListView;
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.classes.Category;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
+import com.brainacad.bacookrecipes.fragments.MainFragment;
 import com.brainacad.bacookrecipes.fragments.RecipesFragment;
+import com.brainacad.bacookrecipes.fragments.dialogs.CloseDialogFragment;
+import com.brainacad.bacookrecipes.interfaces.OnDialogExitClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +32,7 @@ public class MainActivity extends Activity {
 
     private RecipeDbRealm cookbookRealm;
 
-    private RecipesFragment recipesFragment;
+    private Fragment fragment;
 
     private DrawerLayout mainDrawerLayout;
     private ActionBarDrawerToggle mainToggle;
@@ -63,7 +67,7 @@ public class MainActivity extends Activity {
         /**/
 
         //settings for drawerListener(creating ActionbarDrawerToggle)
-        mainToggle = new ActionBarDrawerToggle(this, mainDrawerLayout, R.string.open_drawer, R.string.close_drawer){
+        mainToggle = new ActionBarDrawerToggle(this, mainDrawerLayout, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -127,8 +131,9 @@ public class MainActivity extends Activity {
         Category category;
         switch (position) {
             case 0:
+                fragment = new MainFragment();
             case 1:
-                recipesFragment = new RecipesFragment();
+                fragment = new RecipesFragment();
                 break;
             case 2:
             case 3:
@@ -140,12 +145,12 @@ public class MainActivity extends Activity {
             case 9:
                 String nameCat = (String) categoryListView.getItemAtPosition(position);
                 category = cookbookRealm.getCategoryByName(nameCat);
-                recipesFragment = RecipesFragment.newInstance(category.getIdCategory());
+                fragment = RecipesFragment.newInstance(category.getIdCategory());
                 break;
         }
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container_recipes, recipesFragment)
+                .replace(R.id.container_recipes, fragment)
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
@@ -173,7 +178,7 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         //actionBarDrawerToggle "listens" clicks on listViews' items
-        if(mainToggle.onOptionsItemSelected(item)) {
+        if (mainToggle.onOptionsItemSelected(item)) {
             return true;
         }
         /**/
@@ -196,4 +201,25 @@ public class MainActivity extends Activity {
         super.onDestroy();
         cookbookRealm.close();
     }
+
+    //close app
+    OnDialogExitClickListener dialogExitClickListener = new OnDialogExitClickListener() {
+        @Override
+        public void onClickCancel() {
+        }
+
+        @Override
+        public void onClickExit() {
+            finish();
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+
+        CloseDialogFragment dialogFragment = new CloseDialogFragment();
+        dialogFragment.setListener(dialogExitClickListener);
+        dialogFragment.show(getFragmentManager(), null);
+    }
+    /**/
 }
