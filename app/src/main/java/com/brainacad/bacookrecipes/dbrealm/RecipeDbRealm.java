@@ -99,6 +99,16 @@ public class RecipeDbRealm {
         return category;
     }
 
+    public Recipe getRecipeById(String idRecipe) {
+        realmDb.beginTransaction();
+        Recipe recipe = realmDb
+                .where(Recipe.class)
+                .equalTo(ID_RECIPE, idRecipe)
+                .findFirst();
+        realmDb.commitTransaction();
+        return recipe;
+    }
+
     public Category getCategoryByName(String name) {
         realmDb.beginTransaction();
         Category category = realmDb

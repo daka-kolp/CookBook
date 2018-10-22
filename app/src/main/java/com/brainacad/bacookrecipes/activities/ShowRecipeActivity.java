@@ -28,8 +28,9 @@ public class ShowRecipeActivity extends Activity {
     private IngredientAdapter ingredientAdapterShow;
 
     private ImageView photoRecipeShow;
-    private TextView nameRecipeShow;
     private TextView descriptionRecipeShow;
+    private TextView timeRecipeShow;
+    private TextView caloriesRecipeShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,11 @@ public class ShowRecipeActivity extends Activity {
         photoRecipeShow = findViewById(R.id.show_image_recipe);
         photoRecipeShow.setImageResource(recipe.getImageRecipe());
 
-        nameRecipeShow = findViewById(R.id.show_name_recipe);
-        nameRecipeShow.setText(recipe.getNameRecipe());
+        timeRecipeShow = findViewById(R.id.show_time_recipe);
+        timeRecipeShow.setText(String.valueOf(recipe.getTimeCookingMinRecipe()));
+
+        caloriesRecipeShow = findViewById(R.id.show_calorie_recipe);
+        caloriesRecipeShow.setText(String.valueOf(recipe.getCaloriesRecipe()));
 
         descriptionRecipeShow = findViewById(R.id.show_steps_recipe);
         descriptionRecipeShow.setText(recipe.getDescriptionRecipe());
@@ -65,7 +69,7 @@ public class ShowRecipeActivity extends Activity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(R.string.title_activity_show_recipe);
+            actionBar.setTitle(recipe.getNameRecipe());
         }
         /**/
 

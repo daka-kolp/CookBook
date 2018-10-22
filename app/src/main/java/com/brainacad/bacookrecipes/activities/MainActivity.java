@@ -2,6 +2,7 @@ package com.brainacad.bacookrecipes.activities;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -179,6 +180,10 @@ public class MainActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_settings:
 
+                //
+                Intent intent = new Intent(this, ShowRecipeActivity.class);
+                startActivity(intent);
+                //
                 return true;
 
         }

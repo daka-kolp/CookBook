@@ -1,21 +1,21 @@
 package com.brainacad.bacookrecipes.fragments;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.adapters.RecipeAdapter;
-import com.brainacad.bacookrecipes.classes.Category;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,7 +55,7 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        realm = new RecipeDbRealm();
+        cookbookRealm = new RecipeDbRealm();
         if (getArguments() != null) {
             idCategory = getArguments().getString(ID_CATEGORY);
         }
@@ -68,7 +68,7 @@ public class RecipesFragment extends Fragment {
     /**/
 
     //open realmDb
-    private RecipeDbRealm realm;
+    private RecipeDbRealm cookbookRealm;
     /**/
 
     //settings recipes' adapter
@@ -82,10 +82,14 @@ public class RecipesFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recipeRecyclerView.setLayoutManager(layoutManager);
         List<Recipe> recipes = null;
-        if (getArguments() != null)
-            recipes = realm.getAllRecipesInCategory(idCategory);
-        else
-            recipes = realm.getAllRecipes();
+
+        if (getArguments() != null) {
+            recipes = cookbookRealm.getAllRecipesInCategory(idCategory);
+            Log.d(ID_CATEGORY, "onCreateView: " + getArguments().getString(ID_CATEGORY));
+        } else
+            recipes = cookbookRealm.getAllRecipes();
+
+
         recipeAdapter = new RecipeAdapter();
         recipeAdapter.setRecipeList(recipes);
 
@@ -118,7 +122,7 @@ public class RecipesFragment extends Fragment {
         super.onDetach();
         mListener = null;
         //close realmDb
-        realm.close();
+        cookbookRealm.close();
         /**/
     }
 
