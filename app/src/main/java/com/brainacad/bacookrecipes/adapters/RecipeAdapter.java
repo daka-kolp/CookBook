@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.nameRecipe.setText(recipe.getNameRecipe());
         holder.timeRecipe.setText(String.valueOf(recipe.getTimeCookingMinRecipe()));
         holder.calorieRecipe.setText(String.valueOf(recipe.getCaloriesRecipe()));
+
         holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +72,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             nameRecipe = itemView.findViewById(R.id.recipe_name);
             timeRecipe = itemView.findViewById(R.id.recipe_time);
             calorieRecipe = itemView.findViewById(R.id.recipe_calorie);
-
         }
     }
 }

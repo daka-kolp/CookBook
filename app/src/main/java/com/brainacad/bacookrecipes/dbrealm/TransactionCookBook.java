@@ -6,8 +6,6 @@ import com.brainacad.bacookrecipes.classes.Ingredient;
 import com.brainacad.bacookrecipes.classes.Recipe;
 
 
-import java.util.ResourceBundle;
-
 import io.realm.Realm;
 import io.realm.RealmList;
 
@@ -17,7 +15,7 @@ public class TransactionCookBook implements Realm.Transaction {
 
 
         Category category = new Category();
-        category.setImageCategory(R.drawable.if_favour);
+        category.setImageCategory(R.drawable.if_favourite);
         category.setNameCategory("Favourites recipe");
         realm.insert(category);
 

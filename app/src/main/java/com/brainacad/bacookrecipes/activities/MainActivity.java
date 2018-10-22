@@ -1,14 +1,12 @@
 package com.brainacad.bacookrecipes.activities;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +29,14 @@ public class MainActivity extends Activity {
 
     private RecipesFragment recipesFragment;
 
-    private DrawerLayout mainDrawerList;
+    private DrawerLayout mainDrawerLayout;
+    private ActionBarDrawerToggle mainToggle;
     private ListView categoryListView;
 
-    private List<String> namesCategories;
+    //for ListView to fill categories' names
+    private List<String> namesCategories = new ArrayList<String>();
     private List<Category> categories;
+    /**/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +45,11 @@ public class MainActivity extends Activity {
 
         cookbookRealm = new RecipeDbRealm();
 
-        //settings drawerList
-        mainDrawerList = findViewById(R.id.main_drawer_layout);
+        //settings drawerLayout
+        mainDrawerLayout = findViewById(R.id.main_drawer_layout);
         categoryListView = findViewById(R.id.list_view_category);
         categoryListView.setOnItemClickListener(new DrawerItemClickListener());
-        /**/
 
-        //fill drawerList by categories' names
-        namesCategories = new ArrayList<String>();
         categories = cookbookRealm.getAllCategories();
         for (Category c : categories) {
             namesCategories.add(c.getNameCategory());
@@ -63,11 +61,55 @@ public class MainActivity extends Activity {
         ));
         /**/
 
+        //settings for drawerListener(creating ActionbarDrawerToggle)
+        mainToggle = new ActionBarDrawerToggle(this, mainDrawerLayout, R.string.open_drawer, R.string.close_drawer){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();//the method invokes onPrepareOptionsMenu()
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();//the method invokes onPrepareOptionsMenu()
+
+            }
+        };
+        mainDrawerLayout.setDrawerListener(mainToggle);
+        /**/
+
+        //create button "Up" for actionBar + listView
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        /**/
+
         if (savedInstanceState == null) {
             selectItem(1);
         }
     }
 
+//    //main menu is visible if drawerLayout is closed or not if is opened
+//    @Override
+//    public boolean onPrepareOptionsMenu(Menu menu) {
+//        boolean isDrawerOpen = mainDrawerLayout.isDrawerOpen(categoryListView);
+//        menu.findItem(R.id.action_share_recipe).setVisible(!isDrawerOpen);
+//        return super.onPrepareOptionsMenu(menu);
+//    }
+//    /**/
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mainToggle.syncState();//to change state of icon of button "Up" when drawerLayout is opened or closed
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mainToggle.onConfigurationChanged(newConfig);//every changes of device config send to ActionBarDrawerToggle
+    }
 
     //class-listener for listView
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -77,8 +119,8 @@ public class MainActivity extends Activity {
             selectItem(position);
         }
     }
-
     /**/
+
     //chooser for listView
     private void selectItem(int position) {
         Category category;
@@ -107,10 +149,10 @@ public class MainActivity extends Activity {
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
         setActionBarTitle(position);
-        mainDrawerList.closeDrawer(categoryListView);
+        mainDrawerLayout.closeDrawer(categoryListView);
     }
-
     /**/
+
     //set title for fragments
     private void setActionBarTitle(int position) {
         String title = namesCategories.get(position);
@@ -129,6 +171,11 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        //actionBarDrawerToggle "listens" clicks on listViews' items
+        if(mainToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        /**/
         switch (item.getItemId()) {
             case R.id.action_settings:
 
