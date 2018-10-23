@@ -44,7 +44,8 @@ public class ShowRecipeActivity extends Activity {
 
         cookbookRealm = new RecipeDbRealm();
 
-        Recipe recipe = cookbookRealm.getRecipeByName("A recipe");
+        Intent intent = getIntent();
+        Recipe recipe = cookbookRealm.getRecipeById(intent.getStringExtra(MainActivity.RECIPE_FOR_SHOW));
 
         photoRecipeShow = findViewById(R.id.show_image_recipe);
         photoRecipeShow.setImageResource(recipe.getImageRecipe());

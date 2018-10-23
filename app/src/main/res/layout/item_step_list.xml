@@ -17,9 +17,9 @@
             android:layout_marginRight="30dp" />
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="500dp"
             android:layout_height="1dp"
-            android:src="@color/general_color" />
+            android:src="@color/color_for_lines" />
 
     </LinearLayout>
 </RelativeLayout>

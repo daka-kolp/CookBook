@@ -78,11 +78,11 @@ public class MainFragment extends Fragment {
 /*    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnRecipeFragmentListener) {
+            mListener = (OnRecipeFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnRecipeFragmentListener");
         }
     }*/
 

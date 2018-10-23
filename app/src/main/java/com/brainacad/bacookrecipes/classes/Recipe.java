@@ -16,6 +16,7 @@ public class Recipe extends RealmObject implements Serializable {
     private int timeCookingMinRecipe;
     private int caloriesRecipe;
     private int numPortionRecipe;
+    private boolean isFavouriteRecipe;
 
     public Recipe() {
         this.idRecipe = UUID.randomUUID().toString();
@@ -119,5 +120,17 @@ public class Recipe extends RealmObject implements Serializable {
 
     public void setNumPortionRecipe(int numPortionRecipe) {
         this.numPortionRecipe = numPortionRecipe;
+    }
+
+    public String getIdRecipe() {
+        return idRecipe;
+    }
+
+    public boolean isFavouriteRecipe() {
+        return isFavouriteRecipe;
+    }
+
+    public void setFavouriteRecipe(boolean favouriteRecipe) {
+        isFavouriteRecipe = favouriteRecipe;
     }
 }

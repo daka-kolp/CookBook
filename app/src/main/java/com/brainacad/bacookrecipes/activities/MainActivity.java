@@ -17,7 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.brainacad.bacookrecipes.R;
+import com.brainacad.bacookrecipes.adapters.RecipeAdapter;
 import com.brainacad.bacookrecipes.classes.Category;
+import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
 import com.brainacad.bacookrecipes.fragments.MainFragment;
 import com.brainacad.bacookrecipes.fragments.RecipesFragment;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements RecipesFragment.OnRecipeFragmentListener {
 
     private RecipeDbRealm cookbookRealm;
 
@@ -194,10 +196,6 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.action_settings:
 
-                //
-                Intent intent = new Intent(this, ShowRecipeActivity.class);
-                startActivity(intent);
-                //
                 return true;
 
         }
@@ -231,4 +229,14 @@ public class MainActivity extends Activity {
         dialogFragment.show(getFragmentManager(), null);
     }
     /**/
+    //listener for cardRecipe
+    public static final String RECIPE_FOR_SHOW = "show recipe";
+    @Override
+    public void onRecipeClick(Recipe recipe) {
+        Intent intent = new Intent(MainActivity.this, ShowRecipeActivity.class);
+        intent.putExtra(RECIPE_FOR_SHOW, recipe.getIdRecipe());
+        startActivity(intent);
+    }
+
+
 }

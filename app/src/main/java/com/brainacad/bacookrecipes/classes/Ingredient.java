@@ -8,6 +8,7 @@ public class Ingredient extends RealmObject {
 
     private String idIngredient;
     private String nameAndAmountIngredient;
+    private boolean isIngredient;
 
     public Ingredient() {
         this.idIngredient = UUID.randomUUID().toString();
@@ -24,5 +25,17 @@ public class Ingredient extends RealmObject {
 
     public void setNameAndAmountIngredient(String nameAndAmountIngredient) {
         this.nameAndAmountIngredient = nameAndAmountIngredient;
+    }
+
+    public String getIdIngredient() {
+        return idIngredient;
+    }
+
+    public boolean isIngredient() {
+        return isIngredient;
+    }
+
+    public void setIngredient(boolean ingredient) {
+        isIngredient = ingredient;
     }
 }

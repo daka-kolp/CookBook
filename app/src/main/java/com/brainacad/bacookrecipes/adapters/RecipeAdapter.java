@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,12 +14,10 @@ import com.brainacad.bacookrecipes.classes.Recipe;
 
 import java.util.List;
 
-import io.realm.RealmList;
-
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     public interface OnRecipeClickListener {
-        void onRecipeClick(int position);
+        void onItemRecipeClick(int position);
     }
 
     private List<Recipe> recipeList;
@@ -28,6 +25,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     public void setRecipeList(List<Recipe> recipeList) {
         this.recipeList = recipeList;
+    }
+
+    public void setRecipeListener(OnRecipeClickListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
@@ -75,7 +76,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             cardRecipe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onRecipeClick(getAdapterPosition());
+                    listener.onItemRecipeClick(getAdapterPosition());
                 }
             });
         }

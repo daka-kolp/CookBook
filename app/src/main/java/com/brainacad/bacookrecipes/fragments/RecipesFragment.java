@@ -1,6 +1,6 @@
 package com.brainacad.bacookrecipes.fragments;
 
-import android.net.Uri;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +15,8 @@ import com.brainacad.bacookrecipes.adapters.RecipeAdapter;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
 
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RecipesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RecipesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipesFragment extends Fragment {
 
     // vars for getting category
@@ -33,7 +24,7 @@ public class RecipesFragment extends Fragment {
     private String idCategory;
     /**/
 
-    private OnFragmentInteractionListener mListener;
+    private OnRecipeFragmentListener mListener;
 
     //empty fragment's constructor
     public RecipesFragment() {
@@ -65,13 +56,14 @@ public class RecipesFragment extends Fragment {
     //create recycler view and adapter for recipes
     private RecipeAdapter recipeAdapter;
     private RecyclerView recipeRecyclerView;
+    private List<Recipe> recipes;
     /**/
 
     //open realmDb
     private RecipeDbRealm cookbookRealm;
     /**/
 
-    //settings recipes' adapter
+    //settings recipe's adapter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -81,7 +73,6 @@ public class RecipesFragment extends Fragment {
         recipeRecyclerView = view.findViewById(R.id.recipe_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recipeRecyclerView.setLayoutManager(layoutManager);
-        List<Recipe> recipes = null;
 
         if (getArguments() != null) {
             recipes = cookbookRealm.getAllRecipesInCategory(idCategory);
@@ -92,6 +83,7 @@ public class RecipesFragment extends Fragment {
 
         recipeAdapter = new RecipeAdapter();
         recipeAdapter.setRecipeList(recipes);
+        recipeAdapter.setRecipeListener(recipeClickListener);
 
         recipeRecyclerView.setAdapter(recipeAdapter);
 
@@ -100,22 +92,22 @@ public class RecipesFragment extends Fragment {
     /**/
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(Recipe recipe) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onRecipeClick(recipe);
         }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnRecipeFragmentListener) {
+            mListener = (OnRecipeFragmentListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnRecipeFragmentListener");
+        }
+    }
 
     @Override
     public void onDetach() {
@@ -136,8 +128,14 @@ public class RecipesFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnRecipeFragmentListener {
+        void onRecipeClick(Recipe recipe);
     }
+
+    private RecipeAdapter.OnRecipeClickListener recipeClickListener = new RecipeAdapter.OnRecipeClickListener() {
+        @Override
+        public void onItemRecipeClick(int position) {
+            mListener.onRecipeClick(recipes.get(position));
+        }
+    };
 }
