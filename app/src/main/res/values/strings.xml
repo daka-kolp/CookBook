@@ -26,5 +26,8 @@
     <string name="close_drawer">Close</string>
     <string name="min">min</string>
     <string name="action_timer">Timer</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
+    <string name="new_recipe">New recipe</string>
 
 </resources>
