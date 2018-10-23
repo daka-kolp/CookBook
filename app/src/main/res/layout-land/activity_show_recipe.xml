@@ -95,13 +95,13 @@
                         android:src="@drawable/ic_people" />
 
                     <TextView
-                        android:id="@+id/show_num_people_recipe"
+                        android:id="@+id/show_portion_recipe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
                 <CheckBox
-                    android:id="@+id/is_favorite"
+                    android:id="@+id/show_is_favourite_recipe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -138,6 +138,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+
         android:orientation="vertical">
 
         <TextView
@@ -147,19 +148,13 @@
             android:text="@string/steps"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <ScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/show_recycler_steps"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp" />
 
-            <TextView
-                android:id="@+id/show_steps_recipe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp" />
-        </ScrollView>
     </LinearLayout>
 
 </LinearLayout>

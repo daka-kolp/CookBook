@@ -90,9 +90,11 @@ public class MainActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
         /**/
 
+        //default fragment
         if (savedInstanceState == null) {
             selectItem(1);
         }
+        /**/
     }
 
 //    //main menu is visible if drawerLayout is closed or not if is opened
@@ -132,6 +134,7 @@ public class MainActivity extends Activity {
         switch (position) {
             case 0:
                 fragment = new MainFragment();
+                break;
             case 1:
                 fragment = new RecipesFragment();
                 break;
@@ -183,6 +186,12 @@ public class MainActivity extends Activity {
         }
         /**/
         switch (item.getItemId()) {
+            case R.id.action_create_new_recipe:
+
+                return true;
+            case R.id.action_timer:
+
+                return true;
             case R.id.action_settings:
 
                 //

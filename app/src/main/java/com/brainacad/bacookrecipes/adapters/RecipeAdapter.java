@@ -19,7 +19,12 @@ import io.realm.RealmList;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
+    public interface OnRecipeClickListener {
+        void onRecipeClick(int position);
+    }
+
     private List<Recipe> recipeList;
+    private OnRecipeClickListener listener;
 
     public void setRecipeList(List<Recipe> recipeList) {
         this.recipeList = recipeList;
@@ -43,12 +48,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.timeRecipe.setText(String.valueOf(recipe.getTimeCookingMinRecipe()));
         holder.calorieRecipe.setText(String.valueOf(recipe.getCaloriesRecipe()));
 
-        holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -72,6 +71,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             nameRecipe = itemView.findViewById(R.id.recipe_name);
             timeRecipe = itemView.findViewById(R.id.recipe_time);
             calorieRecipe = itemView.findViewById(R.id.recipe_calorie);
+
+            cardRecipe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onRecipeClick(getAdapterPosition());
+                }
+            });
         }
     }
 }

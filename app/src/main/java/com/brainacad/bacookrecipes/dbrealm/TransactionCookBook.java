@@ -3,6 +3,7 @@ package com.brainacad.bacookrecipes.dbrealm;
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.classes.Category;
 import com.brainacad.bacookrecipes.classes.Ingredient;
+import com.brainacad.bacookrecipes.classes.Step;
 import com.brainacad.bacookrecipes.classes.Recipe;
 
 
@@ -24,6 +25,19 @@ public class TransactionCookBook implements Realm.Transaction {
         category.setNameCategory("All recipes");
         realm.insert(category);
 
+        RealmList<Step> step = new RealmList<>(
+                new Step("Some steps1"),
+                new Step("Some steps2"),
+                new Step("Some steps3"),
+                new Step("Some steps4"),
+                new Step("Some steps5"),
+                new Step("Some steps6"),
+                new Step("Some steps7"),
+                new Step("Some steps8"),
+                new Step("Some steps9"),
+                new Step("Some steps10")
+        );
+
         RealmList<Ingredient> ingredients = new RealmList<Ingredient>(
                 new Ingredient("an ingredient1"),
                 new Ingredient("an ingredient2"),
@@ -39,35 +53,31 @@ public class TransactionCookBook implements Realm.Transaction {
         Recipe recipe1 = new Recipe(R.drawable.if_soup,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         Recipe recipe2 = new Recipe(R.drawable.if_soup,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         Recipe recipe3 = new Recipe(R.drawable.if_soup,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         Recipe recipe4 = new Recipe(R.drawable.if_soup,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
 
         RealmList<Recipe> recipes = new RealmList<Recipe>();
@@ -85,35 +95,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_rice,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_rice,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_rice,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_rice,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);
@@ -130,35 +136,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_meat,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_meat,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_meat,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_meat,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);
@@ -175,35 +177,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_fish,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_fish,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_fish,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_fish,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);
@@ -220,35 +218,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_vegetarian,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_vegetarian,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_vegetarian,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_vegetarian,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);
@@ -265,35 +259,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_dessert,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_dessert,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_dessert,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_dessert,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);
@@ -310,35 +300,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_drink,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_drink,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_drink,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_drink,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);
@@ -355,35 +341,31 @@ public class TransactionCookBook implements Realm.Transaction {
         recipe1 = new Recipe(R.drawable.if_starter,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe2 = new Recipe(R.drawable.if_starter,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe3 = new Recipe(R.drawable.if_starter,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
         recipe4 = new Recipe(R.drawable.if_starter,
                 "A recipe",
                 ingredients,
-                "\tSome steps1\n\tSome steps2\n\tSome steps3\n\tSome steps4" +
-                        "\n\tSome steps5\n\tSome steps6\n\tSome steps7\n\tSome steps8" +
-                        "\n\tSome steps9\n\tSome steps10\n\tSome steps11\n\tSome steps12\n\tSome steps13",
+                step,
                 50,
-                1500);
+                1500,
+                4);
 
         recipes = new RealmList<Recipe>();
         recipes.add(recipe1);

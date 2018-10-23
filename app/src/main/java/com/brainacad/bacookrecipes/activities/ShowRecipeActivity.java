@@ -10,12 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.adapters.IngredientAdapter;
+import com.brainacad.bacookrecipes.adapters.StepAdapter;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
 
@@ -24,13 +26,16 @@ public class ShowRecipeActivity extends Activity {
     private ShareActionProvider shareActionProvider;
 
     private RecyclerView ingredientsRecyclerShow;
+    private RecyclerView stepRecyclerShow;
     private RecipeDbRealm cookbookRealm;
     private IngredientAdapter ingredientAdapterShow;
+    private StepAdapter stepAdapterShow;
 
     private ImageView photoRecipeShow;
-    private TextView descriptionRecipeShow;
     private TextView timeRecipeShow;
     private TextView caloriesRecipeShow;
+    private TextView numPortionShow;
+    private CheckBox checkBoxFavouriteShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +55,28 @@ public class ShowRecipeActivity extends Activity {
         caloriesRecipeShow = findViewById(R.id.show_calorie_recipe);
         caloriesRecipeShow.setText(String.valueOf(recipe.getCaloriesRecipe()));
 
-        descriptionRecipeShow = findViewById(R.id.show_steps_recipe);
-        descriptionRecipeShow.setText(recipe.getDescriptionRecipe());
+        numPortionShow = findViewById(R.id.show_portion_recipe);
+        numPortionShow.setText(String.valueOf(recipe.getNumPortionRecipe()));
+
+        checkBoxFavouriteShow = findViewById(R.id.show_is_favourite_recipe);
+
+        stepRecyclerShow = findViewById(R.id.show_recycler_steps);
+        LinearLayoutManager layoutManagerSteps = new LinearLayoutManager(this);
+        stepRecyclerShow.setLayoutManager(layoutManagerSteps);
+        stepAdapterShow = new StepAdapter();
+        stepAdapterShow.setSteps(recipe.getDescriptionsRecipe());
+        stepRecyclerShow.setAdapter(stepAdapterShow);
 
         ingredientsRecyclerShow = findViewById(R.id.show_recycler_ingredients);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        ingredientsRecyclerShow.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManagerIngr = new LinearLayoutManager(this);
+        ingredientsRecyclerShow.setLayoutManager(layoutManagerIngr);
         ingredientAdapterShow = new IngredientAdapter();
         ingredientAdapterShow.setIngredientList(recipe.getIngredientsRecipe());
         ingredientsRecyclerShow.setAdapter(ingredientAdapterShow);
 
         Log.d("SHOW_ACTIVITY", "onCreate: Name " + recipe.getNameRecipe());
         Log.d("SHOW_ACTIVITY", "onCreate: Ingredients " + recipe.getIngredientsRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: Description " + recipe.getDescriptionRecipe());
+        Log.d("SHOW_ACTIVITY", "onCreate: Description " + recipe.getDescriptionsRecipe());
         Log.d("SHOW_ACTIVITY", "onCreate: Time " + recipe.getTimeCookingMinRecipe());
 
         //add button "Up" and title to action bar
@@ -96,12 +110,6 @@ public class ShowRecipeActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share_recipe:
-
-                return true;
-            case R.id.action_edit_recipe:
-
-                return true;
-            case R.id.action_delete_recipe:
 
                 return true;
             default:

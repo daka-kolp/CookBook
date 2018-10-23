@@ -12,9 +12,10 @@ public class Recipe extends RealmObject implements Serializable {
     private int imageRecipe;
     private String nameRecipe;
     private RealmList<Ingredient> ingredientsRecipe;
-    private String descriptionRecipe;
+    private RealmList<Step> descriptionsRecipe;
     private int timeCookingMinRecipe;
     private int caloriesRecipe;
+    private int numPortionRecipe;
 
     public Recipe() {
         this.idRecipe = UUID.randomUUID().toString();
@@ -24,26 +25,29 @@ public class Recipe extends RealmObject implements Serializable {
         Recipe copy = new Recipe();
         copy.setNameRecipe(recipe.getNameRecipe());
         copy.setIngredientsRecipe(recipe.getIngredientsRecipe());
-        copy.setDescriptionRecipe(recipe.getDescriptionRecipe());
+        copy.setDescriptionsRecipe(recipe.getDescriptionsRecipe());
         copy.setTimeCookingMinRecipe(recipe.getTimeCookingMinRecipe());
         copy.setCaloriesRecipe(recipe.getCaloriesRecipe());
         copy.setImageRecipe(recipe.getImageRecipe());
+        copy.setNumPortionRecipe(recipe.getNumPortionRecipe());
         return copy;
     }
 
     public Recipe(int imageRecipe,
                   String nameRecipe,
                   RealmList<Ingredient> ingredientsRecipe,
-                  String descriptionRecipe,
+                  RealmList<Step> descriptionsRecipe,
                   int timeCookingMinRecipe,
-                  int caloriesRecipe) {
+                  int caloriesRecipe,
+                  int numPortionRecipe) {
         this();
         this.imageRecipe = imageRecipe;
         this.nameRecipe = nameRecipe;
         this.ingredientsRecipe = ingredientsRecipe;
-        this.descriptionRecipe = descriptionRecipe;
+        this.descriptionsRecipe = descriptionsRecipe;
         this.timeCookingMinRecipe = timeCookingMinRecipe;
         this.caloriesRecipe = caloriesRecipe;
+        this.numPortionRecipe = numPortionRecipe;
     }
 
     public String getNameRecipe() {
@@ -65,12 +69,20 @@ public class Recipe extends RealmObject implements Serializable {
         this.ingredientsRecipe.add(ingredient);
     }
 
-    public String getDescriptionRecipe() {
-        return descriptionRecipe;
+    public RealmList<Step> getDescriptionsRecipe() {
+        return descriptionsRecipe;
     }
 
-    public void setDescriptionRecipe(String descriptionRecipe) {
-        this.descriptionRecipe = descriptionRecipe;
+    public void setDescriptionsRecipe(RealmList<Step> descriptionsRecipe) {
+        this.descriptionsRecipe = descriptionsRecipe;
+    }
+
+
+    public void setDescriptionRecipe(Step description) {
+        if (this.descriptionsRecipe == null) {
+            this.descriptionsRecipe = new RealmList<Step>();
+        }
+        this.descriptionsRecipe.add(description);
     }
 
     public int getTimeCookingMinRecipe() {
@@ -99,5 +111,13 @@ public class Recipe extends RealmObject implements Serializable {
 
     public void setIngredientsRecipe(RealmList<Ingredient> ingredientsRecipe) {
         this.ingredientsRecipe = ingredientsRecipe;
+    }
+
+    public int getNumPortionRecipe() {
+        return numPortionRecipe;
+    }
+
+    public void setNumPortionRecipe(int numPortionRecipe) {
+        this.numPortionRecipe = numPortionRecipe;
     }
 }
