@@ -146,7 +146,7 @@ public class Recipe extends RealmObject implements Serializable {
 
     public String descriptionToString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\nSteps:\n");
+        builder.append("Steps:\n");
         for (Step step : descriptionsRecipe) {
             builder.append(step.toString());
             builder.append("\n");

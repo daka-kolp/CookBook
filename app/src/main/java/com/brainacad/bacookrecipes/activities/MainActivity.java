@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,6 +49,8 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadSharedPreference();
+
         cookbookRealm = new RecipeDbRealm();
 
         //settings drawerLayout
@@ -90,21 +93,25 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         getActionBar().setHomeButtonEnabled(true);
         /**/
 
-        //default fragment
-        if (savedInstanceState == null) {
-            selectItem(1);
-        }
-        /**/
+        selectItem(currentPosition);
     }
 
-//    //main menu is visible if drawerLayout is closed or not if is opened
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        boolean isDrawerOpen = mainDrawerLayout.isDrawerOpen(categoryListView);
-//        menu.findItem(R.id.action_share_recipe).setVisible(!isDrawerOpen);
-//        return super.onPrepareOptionsMenu(menu);
-//    }
-//    /**/
+    //SharedPreference for changing of fragments
+    public static final String CURRENT_FRAG_POSITION = "current position";
+    private int currentPosition;
+
+    private void saveSharedPreference() {
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(CURRENT_FRAG_POSITION, currentPosition);
+        editor.apply();
+    }
+
+    private void loadSharedPreference() {
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        currentPosition = sharedPreferences.getInt(CURRENT_FRAG_POSITION, 1);
+    }
+    /**/
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -151,6 +158,7 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
                 fragment = RecipesFragment.newInstance(category.getIdCategory());
                 break;
         }
+        currentPosition = position;
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_recipes, fragment)
@@ -204,6 +212,7 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        saveSharedPreference();
         cookbookRealm.close();
     }
 
@@ -226,15 +235,18 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         dialogFragment.setListener(dialogExitClickListener);
         dialogFragment.show(getFragmentManager(), null);
     }
+
     /**/
     //listener for cardRecipe
     public static final String RECIPE_FOR_SHOW = "show recipe";
+
     @Override
     public void onRecipeClick(Recipe recipe) {
         Intent intent = new Intent(MainActivity.this, ShowRecipeActivity.class);
         intent.putExtra(RECIPE_FOR_SHOW, recipe.getIdRecipe());
         startActivity(intent);
     }
+    /**/
 
 
 }

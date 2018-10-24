@@ -2,6 +2,7 @@ package com.brainacad.bacookrecipes.activities;
 
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ActionBar;
@@ -21,22 +22,19 @@ import com.brainacad.bacookrecipes.adapters.IngredientAdapter;
 import com.brainacad.bacookrecipes.adapters.StepAdapter;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
+import com.brainacad.bacookrecipes.fragments.showfragments.DetailInfoAboutRecipeFragment;
+import com.brainacad.bacookrecipes.fragments.showfragments.IngredientsRecipeFragment;
+import com.brainacad.bacookrecipes.fragments.showfragments.StepsRecipeFragment;
 
 public class ShowRecipeActivity extends Activity {
 
     private ShareActionProvider shareActionProvider;
 
-    private RecyclerView ingredientsRecyclerShow;
-    private RecyclerView stepRecyclerShow;
     private RecipeDbRealm cookbookRealm;
-    private IngredientAdapter ingredientAdapterShow;
-    private StepAdapter stepAdapterShow;
 
-    private ImageView photoRecipeShow;
-    private TextView timeRecipeShow;
-    private TextView caloriesRecipeShow;
-    private TextView numPortionShow;
-    private CheckBox checkBoxFavouriteShow;
+    private DetailInfoAboutRecipeFragment fragmentDetail;
+    private IngredientsRecipeFragment fragmentIngredient;
+    private StepsRecipeFragment fragmentStep;
 
 
     public static final String ID_RECIPE = "idRecipe";
@@ -45,47 +43,23 @@ public class ShowRecipeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_recipe);
+        setContentView(R.layout.activity_recipe);
 
         cookbookRealm = new RecipeDbRealm();
 
         Intent intent = getIntent();
         recipe = cookbookRealm.getRecipeById(intent.getStringExtra(MainActivity.RECIPE_FOR_SHOW));
 
-        photoRecipeShow = findViewById(R.id.show_image_recipe);
-        photoRecipeShow.setImageResource(recipe.getImageRecipe());
+        fragmentDetail = DetailInfoAboutRecipeFragment.newInstance(recipe.getIdRecipe());
+        fragmentIngredient = IngredientsRecipeFragment.newInstance(recipe.getIdRecipe());
+        fragmentStep = StepsRecipeFragment.newInstance(recipe.getIdRecipe());
 
-        timeRecipeShow = findViewById(R.id.show_time_recipe);
-        timeRecipeShow.setText(String.valueOf(recipe.getTimeCookingMinRecipe()));
-
-        caloriesRecipeShow = findViewById(R.id.show_calorie_recipe);
-        caloriesRecipeShow.setText(String.valueOf(recipe.getCaloriesRecipe()));
-
-        numPortionShow = findViewById(R.id.show_portion_recipe);
-        numPortionShow.setText(String.valueOf(recipe.getNumPortionRecipe()));
-
-        checkBoxFavouriteShow = findViewById(R.id.show_is_favourite_recipe);
-        checkBoxFavouriteShow.setChecked(recipe.isFavouriteRecipe());
-        checkBoxFavouriteShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                cookbookRealm.setIsFavourite(recipe, isChecked);
-            }
-        });
-
-        stepRecyclerShow = findViewById(R.id.show_recycler_steps);
-        LinearLayoutManager layoutManagerSteps = new LinearLayoutManager(this);
-        stepRecyclerShow.setLayoutManager(layoutManagerSteps);
-        stepAdapterShow = new StepAdapter();
-        stepAdapterShow.setSteps(recipe.getDescriptionsRecipe());
-        stepRecyclerShow.setAdapter(stepAdapterShow);
-
-        ingredientsRecyclerShow = findViewById(R.id.show_recycler_ingredients);
-        LinearLayoutManager layoutManagerIngr = new LinearLayoutManager(this);
-        ingredientsRecyclerShow.setLayoutManager(layoutManagerIngr);
-        ingredientAdapterShow = new IngredientAdapter();
-        ingredientAdapterShow.setIngredientList(recipe.getIngredientsRecipe());
-        ingredientsRecyclerShow.setAdapter(ingredientAdapterShow);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.detail_info_fragment, fragmentDetail)
+                .replace(R.id.ingredients_recipe_fragment, fragmentIngredient)
+                .replace(R.id.steps_recipe_fragment, fragmentStep)
+                .commit();
 
         Log.d("SHOW_ACTIVITY", "onCreate: Name " + recipe.getNameRecipe());
         Log.d("SHOW_ACTIVITY", "onCreate: Ingredients " + recipe.ingredientBoolToString());
@@ -117,12 +91,14 @@ public class ShowRecipeActivity extends Activity {
 
     private void setShareActionProviderIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, recipe.getNameRecipe());
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(recipe.ingredientToString());
-        stringBuilder.append(recipe.descriptionToString());
+        stringBuilder
+                .append(recipe.getNameRecipe())
+                .append("\n")
+                .append(recipe.ingredientToString())
+                .append(recipe.descriptionToString());
         intent.putExtra(Intent.EXTRA_TEXT, stringBuilder.toString());
+        intent.setType("text/plain");
         shareActionProvider.setShareIntent(intent);
     }
 

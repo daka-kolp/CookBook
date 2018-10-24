@@ -32,6 +32,6 @@ public class Step extends RealmObject{
 
     @Override
     public String toString() {
-        return "\t" + descStep;
+        return descStep;
     }
 }

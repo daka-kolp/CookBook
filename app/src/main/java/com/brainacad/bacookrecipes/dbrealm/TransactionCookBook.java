@@ -14,17 +14,6 @@ public class TransactionCookBook implements Realm.Transaction {
     @Override
     public void execute(Realm realm) {
 
-
-        Category category = new Category();
-        category.setImageCategory(R.drawable.if_favourite);
-        category.setNameCategory("Favourites recipe");
-        realm.insert(category);
-
-        category = new Category();
-        category.setImageCategory(R.drawable.ic_all_recipes);
-        category.setNameCategory("All recipes");
-        realm.insert(category);
-
         RealmList<Step> step = new RealmList<>(
                 new Step("Some steps1"),
                 new Step("Some steps2"),
@@ -86,7 +75,7 @@ public class TransactionCookBook implements Realm.Transaction {
         recipes.add(recipe3);
         recipes.add(recipe4);
 
-        category = new Category();
+        Category category = new Category();
         category.setImageCategory(R.drawable.if_soup);
         category.setNameCategory("Soups");
         category.setRecipesCategory(recipes);

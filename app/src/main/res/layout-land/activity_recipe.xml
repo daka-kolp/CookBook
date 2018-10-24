@@ -11,9 +11,8 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <fragment
+        <FrameLayout
             android:id="@+id/detail_info_fragment"
-            class="com.brainacad.bacookrecipes.fragments.showfragments.DetailInfoAboutRecipeFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -21,9 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:src="@color/general_color" />
-        <fragment
+        <FrameLayout
             android:id="@+id/ingredients_recipe_fragment"
-            class="com.brainacad.bacookrecipes.fragments.showfragments.IngredientsRecipeFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
@@ -33,9 +31,8 @@
         android:layout_width="2dp"
         android:layout_height="match_parent"
         android:src="@color/general_color" />
-    <fragment
+    <FrameLayout
         android:id="@+id/steps_recipe_fragment"
-        class="com.brainacad.bacookrecipes.fragments.showfragments.StepsRecipeFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
