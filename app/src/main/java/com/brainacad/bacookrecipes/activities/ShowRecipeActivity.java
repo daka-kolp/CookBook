@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
@@ -37,6 +38,10 @@ public class ShowRecipeActivity extends Activity {
     private TextView numPortionShow;
     private CheckBox checkBoxFavouriteShow;
 
+
+    public static final String ID_RECIPE = "idRecipe";
+    private Recipe recipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +50,7 @@ public class ShowRecipeActivity extends Activity {
         cookbookRealm = new RecipeDbRealm();
 
         Intent intent = getIntent();
-        Recipe recipe = cookbookRealm.getRecipeById(intent.getStringExtra(MainActivity.RECIPE_FOR_SHOW));
+        recipe = cookbookRealm.getRecipeById(intent.getStringExtra(MainActivity.RECIPE_FOR_SHOW));
 
         photoRecipeShow = findViewById(R.id.show_image_recipe);
         photoRecipeShow.setImageResource(recipe.getImageRecipe());
@@ -60,6 +65,13 @@ public class ShowRecipeActivity extends Activity {
         numPortionShow.setText(String.valueOf(recipe.getNumPortionRecipe()));
 
         checkBoxFavouriteShow = findViewById(R.id.show_is_favourite_recipe);
+        checkBoxFavouriteShow.setChecked(recipe.isFavouriteRecipe());
+        checkBoxFavouriteShow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                cookbookRealm.setIsFavourite(recipe, isChecked);
+            }
+        });
 
         stepRecyclerShow = findViewById(R.id.show_recycler_steps);
         LinearLayoutManager layoutManagerSteps = new LinearLayoutManager(this);
@@ -76,9 +88,12 @@ public class ShowRecipeActivity extends Activity {
         ingredientsRecyclerShow.setAdapter(ingredientAdapterShow);
 
         Log.d("SHOW_ACTIVITY", "onCreate: Name " + recipe.getNameRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: Ingredients " + recipe.getIngredientsRecipe());
+        Log.d("SHOW_ACTIVITY", "onCreate: Ingredients " + recipe.ingredientBoolToString());
         Log.d("SHOW_ACTIVITY", "onCreate: Description " + recipe.getDescriptionsRecipe());
         Log.d("SHOW_ACTIVITY", "onCreate: Time " + recipe.getTimeCookingMinRecipe());
+        Log.d("SHOW_ACTIVITY", "onCreate: Calories " + recipe.getCaloriesRecipe());
+        Log.d("SHOW_ACTIVITY", "onCreate: Potions " + recipe.getNumPortionRecipe());
+        Log.d("SHOW_ACTIVITY", "onCreate: isFavourite " + recipe.isFavouriteRecipe());
 
         //add button "Up" and title to action bar
         ActionBar actionBar = getActionBar();
@@ -96,14 +111,18 @@ public class ShowRecipeActivity extends Activity {
         getMenuInflater().inflate(R.menu.recipe_option_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.action_share_recipe);
         shareActionProvider = (ShareActionProvider) menuItem.getActionProvider();
-        setShareActionProviderIntent("Some text");
+        setShareActionProviderIntent();
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setShareActionProviderIntent(String text) {
+    private void setShareActionProviderIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, text);
+        intent.putExtra(Intent.EXTRA_SUBJECT, recipe.getNameRecipe());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(recipe.ingredientToString());
+        stringBuilder.append(recipe.descriptionToString());
+        intent.putExtra(Intent.EXTRA_TEXT, stringBuilder.toString());
         shareActionProvider.setShareIntent(intent);
     }
 

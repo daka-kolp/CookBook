@@ -29,4 +29,9 @@ public class Step extends RealmObject{
     public String getIdStep() {
         return idStep;
     }
+
+    @Override
+    public String toString() {
+        return "\t" + descStep;
+    }
 }

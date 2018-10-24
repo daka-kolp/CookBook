@@ -35,7 +35,18 @@ public class Ingredient extends RealmObject {
         return isIngredient;
     }
 
-    public void setIngredient(boolean ingredient) {
+    public void setBoolIngredient(boolean ingredient) {
         isIngredient = ingredient;
     }
+
+    @Override
+    public String toString() {
+        return "\t" + nameAndAmountIngredient;
+    }
+
+    //for log
+    public String toBoolString() {
+        return "\t" + nameAndAmountIngredient + " " + isIngredient;
+    }
+    /**/
 }

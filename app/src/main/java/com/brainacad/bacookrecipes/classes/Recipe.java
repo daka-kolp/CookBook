@@ -133,4 +133,36 @@ public class Recipe extends RealmObject implements Serializable {
     public void setFavouriteRecipe(boolean favouriteRecipe) {
         isFavouriteRecipe = favouriteRecipe;
     }
+
+    public String ingredientToString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Ingredients:\n");
+        for (Ingredient ingredient : ingredientsRecipe) {
+            builder.append(ingredient.toString());
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
+
+    public String descriptionToString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nSteps:\n");
+        for (Step step : descriptionsRecipe) {
+            builder.append(step.toString());
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
+
+    //for log
+    public String ingredientBoolToString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Ingredients:\n");
+        for (Ingredient ingredient : ingredientsRecipe) {
+            builder.append(ingredient.toBoolString());
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
+    /**/
 }

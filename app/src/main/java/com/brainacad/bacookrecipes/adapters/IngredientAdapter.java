@@ -6,12 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.classes.Ingredient;
+import com.brainacad.bacookrecipes.classes.Recipe;
+import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
 
 import io.realm.RealmList;
+import io.realm.RealmObject;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>{
 
@@ -34,12 +38,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public void onBindViewHolder(@NonNull final IngredientViewHolder holder, int position) {
         Ingredient ingredient = ingredientList.get(position);
         holder.nameIngredient.setText(ingredient.getNameAndAmountIngredient());
-        holder.checkIngredient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        holder.checkIngredient.setChecked(ingredient.isIngredient());
 
     }
 
@@ -56,7 +55,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             super(itemView);
             checkIngredient = itemView.findViewById(R.id.ingredient_check_product);
             nameIngredient = itemView.findViewById(R.id.ingredient_name_product);
-
+            checkIngredient.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Ingredient ingredient = ingredientList.get(getAdapterPosition());
+                    RecipeDbRealm recipeDbRealm = new RecipeDbRealm();
+                    recipeDbRealm.setIsIngredient(ingredient, isChecked);
+                    recipeDbRealm.close();
+                }
+            });
         }
     }
 

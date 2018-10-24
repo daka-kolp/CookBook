@@ -17,11 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.brainacad.bacookrecipes.R;
-import com.brainacad.bacookrecipes.adapters.RecipeAdapter;
 import com.brainacad.bacookrecipes.classes.Category;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
-import com.brainacad.bacookrecipes.fragments.MainFragment;
 import com.brainacad.bacookrecipes.fragments.RecipesFragment;
 import com.brainacad.bacookrecipes.fragments.dialogs.CloseDialogFragment;
 import com.brainacad.bacookrecipes.interfaces.OnDialogExitClickListener;
@@ -135,7 +133,7 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         Category category;
         switch (position) {
             case 0:
-                fragment = new MainFragment();
+                fragment = RecipesFragment.newInstance(RecipesFragment.ID_FAVOURITE_RECIPE);
                 break;
             case 1:
                 fragment = new RecipesFragment();

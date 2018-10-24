@@ -16,10 +16,12 @@ import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
+    //the interface is implemented in RecipeFragment
     public interface OnRecipeClickListener {
         void onItemRecipeClick(int position);
     }
 
+    /**/
     private List<Recipe> recipeList;
     private OnRecipeClickListener listener;
 

@@ -63,6 +63,8 @@ public class RecipesFragment extends Fragment {
     private RecipeDbRealm cookbookRealm;
     /**/
 
+    public static final String ID_FAVOURITE_RECIPE = "Favourite";
+
     //settings recipe's adapter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,10 +77,14 @@ public class RecipesFragment extends Fragment {
         recipeRecyclerView.setLayoutManager(layoutManager);
 
         if (getArguments() != null) {
-            recipes = cookbookRealm.getAllRecipesInCategory(idCategory);
+            if ((getArguments().getString(ID_CATEGORY)).equals(ID_FAVOURITE_RECIPE)) {
+                recipes = cookbookRealm.getFavouriteResipes();
+            } else
+                recipes = cookbookRealm.getAllRecipesInCategory(idCategory);
             Log.d(ID_CATEGORY, "onCreateView: " + getArguments().getString(ID_CATEGORY));
-        } else
+        } else {
             recipes = cookbookRealm.getAllRecipes();
+        }
 
 
         recipeAdapter = new RecipeAdapter();
@@ -118,24 +124,18 @@ public class RecipesFragment extends Fragment {
         /**/
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    //the interface is implemented in MainActivity
     public interface OnRecipeFragmentListener {
         void onRecipeClick(Recipe recipe);
     }
+    /**/
 
+    //listener between RecipeAdapter and RecipeFragment
     private RecipeAdapter.OnRecipeClickListener recipeClickListener = new RecipeAdapter.OnRecipeClickListener() {
         @Override
         public void onItemRecipeClick(int position) {
             mListener.onRecipeClick(recipes.get(position));
         }
     };
+    /**/
 }
