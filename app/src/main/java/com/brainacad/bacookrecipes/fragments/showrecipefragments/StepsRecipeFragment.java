@@ -1,4 +1,4 @@
-package com.brainacad.bacookrecipes.fragments.showfragments;
+package com.brainacad.bacookrecipes.fragments.showrecipefragments;
 
 
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.activities.ShowRecipeActivity;
-import com.brainacad.bacookrecipes.adapters.IngredientAdapter;
 import com.brainacad.bacookrecipes.adapters.StepAdapter;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;

@@ -40,7 +40,7 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
     private ListView categoryListView;
 
     //for ListView to fill categories' names
-    private List<String> namesCategories = new ArrayList<String>();
+    private List<String> namesCategories;
     private List<Category> categories;
     /**/
 
@@ -58,6 +58,9 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         categoryListView = findViewById(R.id.list_view_category);
         categoryListView.setOnItemClickListener(new DrawerItemClickListener());
 
+        namesCategories = new ArrayList<String>();
+        namesCategories.add(getResources().getString(R.string.favourite_recipes));
+        namesCategories.add(getResources().getString(R.string.all_recipes));
         categories = cookbookRealm.getAllCategories();
         for (Category c : categories) {
             namesCategories.add(c.getNameCategory());
@@ -194,13 +197,11 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         }
         /**/
         switch (item.getItemId()) {
-            case R.id.action_create_new_recipe:
+
+            case R.id.action_cooktimer:
 
                 return true;
-            case R.id.action_timer:
-
-                return true;
-            case R.id.action_settings:
+            case R.id.action_calories_calc:
 
                 return true;
 

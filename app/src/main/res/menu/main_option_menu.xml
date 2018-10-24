@@ -5,22 +5,25 @@
     tools:context=".activities.MainActivity">
 
     <item
-        android:id="@+id/action_create_new_recipe"
-        android:title="@string/new_recipe"
+        android:id="@+id/action_search"
+        android:title="@string/action_search"
         android:orderInCategory="100"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_timer"
-        android:title="@string/action_timer"
+        android:id="@+id/action_calories_calc"
+        android:title="@string/action_calories_calc"
         android:orderInCategory="100"
         app:showAsAction="never" />
-
 
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/action_cooktimer"
+        android:title="@string/action_cooktimer"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
+
+
+
 
 </menu>

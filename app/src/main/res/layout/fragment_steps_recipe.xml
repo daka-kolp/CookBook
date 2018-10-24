@@ -3,25 +3,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.showfragments.StepsRecipeFragment">
+    tools:context=".fragments.showrecipefragments.StepsRecipeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="@string/steps"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_show_steps" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="@string/steps"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/show_recycler_steps"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
 </RelativeLayout>

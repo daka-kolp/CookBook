@@ -1,4 +1,4 @@
-package com.brainacad.bacookrecipes.fragments.showfragments;
+package com.brainacad.bacookrecipes.fragments.showrecipefragments;
 
 
 import android.os.Bundle;

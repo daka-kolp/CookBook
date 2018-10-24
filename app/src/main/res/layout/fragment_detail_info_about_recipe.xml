@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragments.showfragments.DetailInfoAboutRecipeFragment">
+    tools:context=".fragments.showrecipefragments.DetailInfoAboutRecipeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="calories" />
+                    android:text="@string/calories" />
 
             </LinearLayout>
 
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/favour" />
+                android:text="@string/favourite_recipes" />
         </LinearLayout>
     </LinearLayout>
 

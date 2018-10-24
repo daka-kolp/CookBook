@@ -6,25 +6,17 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ShareActionProvider;
-import android.widget.TextView;
 
 import com.brainacad.bacookrecipes.R;
-import com.brainacad.bacookrecipes.adapters.IngredientAdapter;
-import com.brainacad.bacookrecipes.adapters.StepAdapter;
 import com.brainacad.bacookrecipes.classes.Recipe;
 import com.brainacad.bacookrecipes.dbrealm.RecipeDbRealm;
-import com.brainacad.bacookrecipes.fragments.showfragments.DetailInfoAboutRecipeFragment;
-import com.brainacad.bacookrecipes.fragments.showfragments.IngredientsRecipeFragment;
-import com.brainacad.bacookrecipes.fragments.showfragments.StepsRecipeFragment;
+import com.brainacad.bacookrecipes.fragments.showrecipefragments.DetailInfoAboutRecipeFragment;
+import com.brainacad.bacookrecipes.fragments.showrecipefragments.IngredientsRecipeFragment;
+import com.brainacad.bacookrecipes.fragments.showrecipefragments.StepsRecipeFragment;
 
 public class ShowRecipeActivity extends Activity {
 
