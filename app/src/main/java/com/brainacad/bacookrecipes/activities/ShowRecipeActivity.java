@@ -19,7 +19,9 @@ import com.brainacad.bacookrecipes.fragments.showrecipefragments.IngredientsReci
 import com.brainacad.bacookrecipes.fragments.showrecipefragments.StepsRecipeFragment;
 
 public class ShowRecipeActivity extends Activity {
-
+    //for log
+    private static final String SHOW_ACTIVITY = "SHOW_ACTIVITY";
+    /**/
     private ShareActionProvider shareActionProvider;
 
     private RecipeDbRealm cookbookRealm;
@@ -53,13 +55,14 @@ public class ShowRecipeActivity extends Activity {
                 .replace(R.id.steps_recipe_fragment, fragmentStep)
                 .commit();
 
-        Log.d("SHOW_ACTIVITY", "onCreate: Name " + recipe.getNameRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: Ingredients " + recipe.ingredientBoolToString());
-        Log.d("SHOW_ACTIVITY", "onCreate: Description " + recipe.getDescriptionsRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: Time " + recipe.getTimeCookingMinRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: Calories " + recipe.getCaloriesRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: Potions " + recipe.getNumPortionRecipe());
-        Log.d("SHOW_ACTIVITY", "onCreate: isFavourite " + recipe.isFavouriteRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: Name " + recipe.getNameRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: Description " + recipe.getIngredientsRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: Ingredients " + recipe.ingredientBoolToString());
+        Log.d(SHOW_ACTIVITY, "onCreate: Description " + recipe.getDescriptionsRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: Time " + recipe.getTimeCookingMinRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: Calories " + recipe.getCaloriesRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: Potions " + recipe.getNumPortionRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: isFavourite " + recipe.isFavouriteRecipe());
 
         //add button "Up" and title to action bar
         ActionBar actionBar = getActionBar();

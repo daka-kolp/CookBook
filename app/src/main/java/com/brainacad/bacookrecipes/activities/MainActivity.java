@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,9 @@ import java.util.List;
 
 
 public class MainActivity extends Activity implements RecipesFragment.OnRecipeFragmentListener {
-
+    //for log
+    private static final String MAIN_ACTIVITY = "MAIN_ACTIVITY";
+    /**/
     private RecipeDbRealm cookbookRealm;
 
     private Fragment fragment;
@@ -58,13 +61,8 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
         categoryListView = findViewById(R.id.list_view_category);
         categoryListView.setOnItemClickListener(new DrawerItemClickListener());
 
-        namesCategories = new ArrayList<String>();
-        namesCategories.add(getResources().getString(R.string.favourite_recipes));
-        namesCategories.add(getResources().getString(R.string.all_recipes));
-        categories = cookbookRealm.getAllCategories();
-        for (Category c : categories) {
-            namesCategories.add(c.getNameCategory());
-        }
+        fillCategoryList();
+
         categoryListView.setAdapter(new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -98,6 +96,23 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
 
         selectItem(currentPosition);
     }
+
+    //fill ArrayList by categories
+    private void fillCategoryList() {
+        namesCategories = new ArrayList<String>();
+        namesCategories.add(getResources().getString(R.string.favourite_recipes));
+        namesCategories.add(getResources().getString(R.string.all_recipes));
+        categories = cookbookRealm.getAllCategories();
+        for (Category c : categories) {
+            namesCategories.add(c.getNameCategory());
+        }
+        //for log
+        for(String c : namesCategories){
+            Log.d(MAIN_ACTIVITY, "fillCategoryList: " + c);
+        }
+        /**/
+    }
+    /**/
 
     //SharedPreference for changing of fragments
     public static final String CURRENT_FRAG_POSITION = "current position";
@@ -159,6 +174,10 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
                 String nameCat = (String) categoryListView.getItemAtPosition(position);
                 category = cookbookRealm.getCategoryByName(nameCat);
                 fragment = RecipesFragment.newInstance(category.getIdCategory());
+
+                Log.d(MAIN_ACTIVITY, "nameCategory in List: " + nameCat);
+                Log.d(MAIN_ACTIVITY, "nameCategory: " + category.getNameCategory());
+
                 break;
         }
         currentPosition = position;
