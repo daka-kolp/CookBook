@@ -1,7 +1,6 @@
 package com.brainacad.bacookrecipes.activities;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +35,7 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
     /**/
     private RecipeDbRealm cookbookRealm;
 
-    private Fragment fragment;
+    private RecipesFragment fragment;
 
     private DrawerLayout mainDrawerLayout;
     private ActionBarDrawerToggle mainToggle;
@@ -181,6 +180,9 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
                 break;
         }
         currentPosition = position;
+        //for android 5
+//        fragment.setListener(this);
+        /**/
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_recipes, fragment)

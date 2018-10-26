@@ -7,6 +7,7 @@ import com.brainacad.bacookrecipes.classes.Recipe;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.Sort;
 
 public class RecipeDbRealm {
 
@@ -34,20 +35,26 @@ public class RecipeDbRealm {
             }
         });
     }
+
     public void setIsFavourite(final Recipe recipe, final boolean is) {
         realmDb.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 recipe.setFavouriteRecipe(is);
+                if (is)
+                    recipe.setTimeAddingToFavourite(System.currentTimeMillis());
+                else
+                    recipe.setTimeAddingToFavourite(0);
             }
         });
     }
 
-    public List<Recipe> getFavouriteResipes(){
+    public List<Recipe> getFavouriteRecipes() {
         realmDb.beginTransaction();
         List<Recipe> resList = realmDb
                 .where(Recipe.class)
                 .equalTo(IS_FAVOURITE, true)
+                .sort("timeAddingToFavourite", Sort.DESCENDING)
                 .findAll();
         realmDb.commitTransaction();
         return resList;

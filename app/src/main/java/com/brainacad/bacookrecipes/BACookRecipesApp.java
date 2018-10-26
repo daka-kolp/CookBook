@@ -19,7 +19,7 @@ public class BACookRecipesApp extends Application {
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name(NAME_DB)
-                .schemaVersion(1)
+                .schemaVersion(2)
                 .migration(new DBCookbookMigration())
                 .initialData(new TransactionCookBook())
                 .build();

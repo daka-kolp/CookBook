@@ -1,8 +1,10 @@
 package com.brainacad.bacookrecipes.fragments;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,6 +28,11 @@ public class RecipesFragment extends Fragment {
 
     private OnRecipeFragmentListener mListener;
 
+    //for android 5
+//    public void setListener(OnRecipeFragmentListener mListener) {
+//        this.mListener = mListener;
+//    }
+    /**/
     //empty fragment's constructor
     public RecipesFragment() {
     }
@@ -73,12 +80,16 @@ public class RecipesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipes, container, false);
 
         recipeRecyclerView = view.findViewById(R.id.recipe_recycler_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recipeRecyclerView.setLayoutManager(layoutManager);
-
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            recipeRecyclerView.setLayoutManager(layoutManager);
+        } else if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+            recipeRecyclerView.setLayoutManager(layoutManager);
+        }
         if (getArguments() != null) {
             if ((getArguments().getString(ID_CATEGORY)).equals(ID_FAVOURITE_RECIPE)) {
-                recipes = cookbookRealm.getFavouriteResipes();
+                recipes = cookbookRealm.getFavouriteRecipes();
             } else
                 recipes = cookbookRealm.getAllRecipesInCategory(idCategory);
             Log.d(ID_CATEGORY, "onCreateView: " + getArguments().getString(ID_CATEGORY));
@@ -97,12 +108,6 @@ public class RecipesFragment extends Fragment {
     }
     /**/
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Recipe recipe) {
-        if (mListener != null) {
-            mListener.onRecipeClick(recipe);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -134,7 +139,8 @@ public class RecipesFragment extends Fragment {
     private RecipeAdapter.OnRecipeClickListener recipeClickListener = new RecipeAdapter.OnRecipeClickListener() {
         @Override
         public void onItemRecipeClick(int position) {
-            mListener.onRecipeClick(recipes.get(position));
+            if (mListener != null)
+                mListener.onRecipeClick(recipes.get(position));
         }
     };
     /**/

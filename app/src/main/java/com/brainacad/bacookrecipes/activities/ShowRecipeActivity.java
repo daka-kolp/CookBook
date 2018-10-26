@@ -63,6 +63,7 @@ public class ShowRecipeActivity extends Activity {
         Log.d(SHOW_ACTIVITY, "onCreate: Calories " + recipe.getCaloriesRecipe());
         Log.d(SHOW_ACTIVITY, "onCreate: Potions " + recipe.getNumPortionRecipe());
         Log.d(SHOW_ACTIVITY, "onCreate: isFavourite " + recipe.isFavouriteRecipe());
+        Log.d(SHOW_ACTIVITY, "onCreate: timeAddingToFavourite " + recipe.getTimeAddingToFavourite());
 
         //add button "Up" and title to action bar
         ActionBar actionBar = getActionBar();
