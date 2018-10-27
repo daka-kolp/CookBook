@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 
 import com.brainacad.bacookrecipes.R;
 import com.brainacad.bacookrecipes.classes.Category;
@@ -95,6 +97,7 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
 
         selectItem(currentPosition);
     }
+
 
     //fill ArrayList by categories
     private void fillCategoryList() {
