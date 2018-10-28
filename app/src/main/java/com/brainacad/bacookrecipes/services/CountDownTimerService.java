@@ -19,6 +19,7 @@ public class CountDownTimerService extends Service {
     public static final String COUNTDOWN_UPDATE_BROADCAST = "COUNTDOWN_UPDATE_BROADCAST";
     public static final String COUNTDOWN_TIME_BR = "COUNTDOWN_TIME_BR ";
 
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
@@ -29,27 +30,20 @@ public class CountDownTimerService extends Service {
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                String time = updateTime(millisUntilFinished);
                 Intent i = new Intent(COUNTDOWN_UPDATE_BROADCAST);
-                i.putExtra(COUNTDOWN_TIME_BR, time);
+                i.putExtra(COUNTDOWN_TIME_BR, millisUntilFinished);
                 sendBroadcast(i);
             }
 
             public void onFinish() {
                 Intent i = new Intent(COUNTDOWN_UPDATE_BROADCAST);
-                i.putExtra(COUNTDOWN_TIME_BR, "00:00");
+                i.putExtra(COUNTDOWN_TIME_BR, 0);
                 sendBroadcast(i);
                 stopSelf();
             }
         };
         countDownTimer.start();
         return START_STICKY;
-    }
-
-    private String updateTime(long millisUntilFinished) {
-        long min = millisUntilFinished / millisecondsInMinute;
-        long sec = millisUntilFinished % millisecondsInMinute / millisecondsInSecond;
-        return String.format("%02d:%02d", min, sec);
     }
 
     @Override

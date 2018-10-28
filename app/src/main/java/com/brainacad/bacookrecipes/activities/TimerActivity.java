@@ -63,6 +63,7 @@ public class TimerActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.action_cooktimer);
         }
+
     }
 
     private long millisecondsInMinute = 60_000;
