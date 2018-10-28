@@ -19,6 +19,10 @@ public class CountDownTimerService extends Service {
     public static final String COUNTDOWN_UPDATE_BROADCAST = "COUNTDOWN_UPDATE_BROADCAST";
     public static final String COUNTDOWN_TIME_BR = "COUNTDOWN_TIME_BR ";
 
+    public static final int START = 100;
+    public static final int STOP = 200;
+    public static final int RESET = 300;
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

@@ -2,8 +2,12 @@ package com.brainacad.bacookrecipes.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -27,6 +31,7 @@ public class TimerActivity extends Activity {
     private long timeLeftInMillis;
 
     public static final String LOG_TIME = "log time";
+    private static final int NOTIFICATION_ID = 313;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,9 @@ public class TimerActivity extends Activity {
         long time = Long.valueOf(editTimeSet.getText().toString()) * millisecondsInMinute;
         timeLeftInMillis = time;
         updateViewTime(time);
+        if (running) {
+            pauseTimer();
+        }
         closeKeyboard();
     }
 
@@ -97,6 +105,16 @@ public class TimerActivity extends Activity {
 
             @Override
             public void onFinish() {
+
+                Notification notification = new Notification.Builder(getApplicationContext())
+                        .setSmallIcon(R.drawable.ic_show_steps)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText("Ready")
+                        .setPriority(Notification.PRIORITY_HIGH)
+                        .build();
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(NOTIFICATION_ID, notification);
+
                 running = false;
                 updateViewTime(0);
                 startPauseTimeButton.setText(R.string.start);
