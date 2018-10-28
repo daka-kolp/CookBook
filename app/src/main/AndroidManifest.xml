@@ -21,7 +21,16 @@
         <activity
             android:name=".activities.ShowRecipeActivity"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.TimerActivity"/>
+        <activity android:name=".activities.TimerActivity" />
+
+        <service
+            android:name=".services.CountDownTimerService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".services.CountDownService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -224,7 +224,10 @@ public class MainActivity extends Activity implements RecipesFragment.OnRecipeFr
 
             case R.id.action_cooktimer:
 
+                Intent intent = new Intent(this, TimerActivity.class);
+                startActivity(intent);
                 return true;
+
             case R.id.action_calories_calc:
 
                 return true;
