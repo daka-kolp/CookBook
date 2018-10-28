@@ -46,7 +46,6 @@ public class CountDownTimerService extends Service {
                 setTime(bundle);
                 break;
             case START:
-
                 startTimer();
                 break;
             case STOP:
@@ -81,11 +80,11 @@ public class CountDownTimerService extends Service {
     }
 
     private void startTimer() {
-
         timer = new CountDownTimer(timeLeftInMillis, millisecondsInSecond) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
+                running = true;
                 updateViewTime(timeLeftInMillis);
             }
 
@@ -100,26 +99,22 @@ public class CountDownTimerService extends Service {
                         .build();
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(NOTIFICATION_ID, notification);
-
                 running = false;
                 updateViewTime(0);
-//                startPauseTimeButton.setText(R.string.start);
             }
         }.start();
-        running = true;
-//        startPauseTimeButton.setText(R.string.pause);
-
     }
+
     private void pauseTimer() {
         running = false;
         timer.cancel();
-//        startPauseTimeButton.setText(R.string.start);
+        updateViewTime(timeLeftInMillis);
     }
 
     private void resetTime() {
         running = false;
-        timer.cancel();
         timeLeftInMillis = 0;
+        timer.cancel();
         updateViewTime(timeLeftInMillis);
     }
 
@@ -131,6 +126,5 @@ public class CountDownTimerService extends Service {
         i.putExtra(COUNTDOWN_TIME_BR, timeStr);
         i.putExtra(COUNTDOWN_IS_RUN_BR, running);
         sendBroadcast(i);
-//        viewTime.setText(timeStr);
     }
 }
