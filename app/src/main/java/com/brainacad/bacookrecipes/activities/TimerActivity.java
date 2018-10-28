@@ -2,12 +2,11 @@ package com.brainacad.bacookrecipes.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -15,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.brainacad.bacookrecipes.R;
+import com.brainacad.bacookrecipes.services.CountDownTimerService;
 
 public class TimerActivity extends Activity {
 
@@ -24,14 +24,10 @@ public class TimerActivity extends Activity {
     private Button startPauseTimeButton;
     private Button resetTimeButton;
 
-    private boolean running;
-
-    private CountDownTimer timer;
 
     private long timeLeftInMillis;
 
     public static final String LOG_TIME = "log time";
-    private static final int NOTIFICATION_ID = 313;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +68,17 @@ public class TimerActivity extends Activity {
     }
 
     private long millisecondsInMinute = 60_000;
-    private long millisecondsInSecond = 1_000;
 
     private void setTime() {
         if (editTimeSet.getText().toString().equals(""))
             return;
-        long time = Long.valueOf(editTimeSet.getText().toString()) * millisecondsInMinute;
-        timeLeftInMillis = time;
-        updateViewTime(time);
-        if (running) {
-            pauseTimer();
-        }
+        timeLeftInMillis = Long.valueOf(editTimeSet.getText().toString()) * millisecondsInMinute;
+
+        Intent intent = new Intent(this, CountDownTimerService.class);
+        intent.putExtra(CountDownTimerService.TIMER_MODE_INTENT, CountDownTimerService.SET);
+        intent.putExtra(CountDownTimerService.TIME_INTENT, timeLeftInMillis);
+        startService(intent);
+
         closeKeyboard();
     }
 
@@ -95,55 +91,27 @@ public class TimerActivity extends Activity {
     }
 
     private void startTimer() {
-
-        timer = new CountDownTimer(timeLeftInMillis, millisecondsInSecond) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeLeftInMillis = millisUntilFinished;
-                updateViewTime(timeLeftInMillis);
-            }
-
-            @Override
-            public void onFinish() {
-
-                Notification notification = new Notification.Builder(getApplicationContext())
-                        .setSmallIcon(R.drawable.ic_show_steps)
-                        .setContentTitle(getString(R.string.app_name))
-                        .setContentText("Ready")
-                        .setPriority(Notification.PRIORITY_HIGH)
-                        .build();
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(NOTIFICATION_ID, notification);
-
-                running = false;
-                updateViewTime(0);
-                startPauseTimeButton.setText(R.string.start);
-            }
-        }.start();
-
-        running = true;
-        startPauseTimeButton.setText(R.string.pause);
+        Intent intent = new Intent(this, CountDownTimerService.class);
+        intent.putExtra(CountDownTimerService.TIMER_MODE_INTENT, CountDownTimerService.START);
+        startService(intent);
+        if (running)
+            startPauseTimeButton.setText(R.string.pause);
+        else
+            startPauseTimeButton.setText(R.string.start);
 
     }
 
     private void pauseTimer() {
-        running = false;
-        timer.cancel();
+        Intent intent = new Intent(this, CountDownTimerService.class);
+        intent.putExtra(CountDownTimerService.TIMER_MODE_INTENT, CountDownTimerService.STOP);
+        startService(intent);
         startPauseTimeButton.setText(R.string.start);
     }
 
     private void resetTime() {
-        running = false;
-        timer.cancel();
-        timeLeftInMillis = 0;
-        updateViewTime(timeLeftInMillis);
-    }
-
-    private void updateViewTime(long millisUntilFinished) {
-        long min = millisUntilFinished / millisecondsInMinute;
-        long sec = millisUntilFinished % millisecondsInMinute / millisecondsInSecond;
-        String timeStr = String.format("%02d:%02d", min, sec);
-        viewTime.setText(timeStr);
+        Intent intent = new Intent(this, CountDownTimerService.class);
+        intent.putExtra(CountDownTimerService.TIMER_MODE_INTENT, CountDownTimerService.RESET);
+        startService(intent);
     }
 
     private void closeKeyboard() {
@@ -155,5 +123,28 @@ public class TimerActivity extends Activity {
         if (inputMethodManager != null) {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private String timeStr;
+    private boolean running;
+    BroadcastReceiver uiUpdate = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            timeStr = intent.getExtras().getString(CountDownTimerService.COUNTDOWN_TIME_BR);
+            running = intent.getExtras().getBoolean(CountDownTimerService.COUNTDOWN_IS_RUN_BR);
+            viewTime.setText(timeStr);
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(uiUpdate, new IntentFilter(CountDownTimerService.COUNTDOWN_UPDATE_BROADCAST));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(uiUpdate);
     }
 }
