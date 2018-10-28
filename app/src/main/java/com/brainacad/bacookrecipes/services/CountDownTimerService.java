@@ -2,6 +2,7 @@ package com.brainacad.bacookrecipes.services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 
 import com.brainacad.bacookrecipes.R;
+import com.brainacad.bacookrecipes.activities.TimerActivity;
 
 public class CountDownTimerService extends Service {
 
@@ -41,7 +43,7 @@ public class CountDownTimerService extends Service {
 
         Bundle bundle = intent.getExtras();
         int mode = bundle.getInt(TIMER_MODE_INTENT, RESET);
-        switch (mode){
+        switch (mode) {
             case SET:
                 setTime(bundle);
                 break;
@@ -79,7 +81,11 @@ public class CountDownTimerService extends Service {
         }
     }
 
+    private long timerStart;
+    private long timerEnd;
+
     private void startTimer() {
+        timerStart = System.currentTimeMillis();
         timer = new CountDownTimer(timeLeftInMillis, millisecondsInSecond) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -90,15 +96,27 @@ public class CountDownTimerService extends Service {
 
             @Override
             public void onFinish() {
+                timerEnd = System.currentTimeMillis();
+                if (timerEnd - timerStart > millisecondsInSecond * 2) {
+                    Intent notifIntent = new Intent(CountDownTimerService.this, TimerActivity.class);
+                    PendingIntent contentIntent = PendingIntent.getActivity(
+                            CountDownTimerService.this,
+                            0,
+                            notifIntent,
+                            PendingIntent.FLAG_ONE_SHOT
+                    );
 
-                Notification notification = new Notification.Builder(getApplicationContext())
-                        .setSmallIcon(R.drawable.ic_show_steps)
-                        .setContentTitle(getString(R.string.app_name))
-                        .setContentText("Ready")
-                        .setPriority(Notification.PRIORITY_HIGH)
-                        .build();
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(NOTIFICATION_ID, notification);
+                    Notification notification = new Notification.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.ic_show_steps)
+                            .setContentTitle(getString(R.string.app_name))
+                            .setContentText("Ready")
+                            .setContentIntent(contentIntent)
+                            .setPriority(Notification.PRIORITY_HIGH)
+                            .build();
+                    notification.defaults = Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
+                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    notificationManager.notify(NOTIFICATION_ID, notification);
+                }
                 running = false;
                 updateViewTime(0);
             }

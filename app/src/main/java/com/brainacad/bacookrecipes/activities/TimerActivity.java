@@ -2,14 +2,11 @@ package com.brainacad.bacookrecipes.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +28,7 @@ public class TimerActivity extends Activity {
     private long timeLeftInMillis;
 
     private static final String TAG_Timer = "TAG_Timer";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +81,7 @@ public class TimerActivity extends Activity {
         if (startPauseTimeButton.getText().toString().equals(getResources().getString(R.string.pause))) {
             startPauseTimeButton.setText(R.string.start);
         }
+        editTimeSet.setText("");
         closeKeyboard();
     }
 
